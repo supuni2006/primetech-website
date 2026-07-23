@@ -315,3 +315,65 @@ document.querySelectorAll('[data-svc]').forEach(item=>{
     input.value = '';
   });
 })();
+
+/* ============ QUICK ENQUIRY / GET A QUOTE MODAL ============ */
+(function(){
+  const overlay = document.getElementById('quoteModalOverlay');
+  const openTriggers = document.querySelectorAll('[data-open-quote]');
+  const closeBtn = document.getElementById('quoteModalClose');
+  const form = document.getElementById('quoteForm');
+  if(!overlay || !form) return;
+
+  function openModal(e){
+    if(e) e.preventDefault();
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(){
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  openTriggers.forEach(btn => btn.addEventListener('click', openModal));
+  closeBtn.addEventListener('click', closeModal);
+
+  overlay.addEventListener('click', (e) => {
+    if(e.target === overlay) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && overlay.classList.contains('active')) closeModal();
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('qName').value.trim();
+    const email = document.getElementById('qEmail').value.trim();
+    const phone = document.getElementById('qPhone').value.trim();
+    const service = document.getElementById('qService').value;
+    const notes = document.getElementById('qNotes').value.trim();
+
+    if(!name || !email || !phone){
+      alert('Please fill in your name, email and contact number so we can call you back.');
+      return;
+    }
+
+    const subject = encodeURIComponent(`Quote Request — ${service}`);
+    const body = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\nContact Number: ${phone}\nService Needed: ${service}\nDetails: ${notes || '—'}`
+    );
+
+    window.location.href = `mailto:primetechengineering26@gmail.com?subject=${subject}&body=${body}`;
+
+    const submitBtn = form.querySelector('.qm-submit');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = 'Request Sent ✓';
+    setTimeout(() => {
+      submitBtn.innerHTML = originalText;
+      form.reset();
+      closeModal();
+    }, 1800);
+  });
+})();
