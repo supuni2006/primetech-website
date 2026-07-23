@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Prime Tech Engineering — Systems for Every Building</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<div id="preloader">
+  <img class="pl-logo" src="assets/logo.png" alt="">
+  <div class="pl-label">Initializing systems</div>
+  <div class="pl-bar"><i id="pl-fill"></i></div>
+  <div class="pl-pct" id="pl-pct">0%</div>
+</div>
+
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"><span id="cursorLabel"></span></div>
+
+<nav id="mainNav">
+  <div class="nav-frame">
+    <div class="nav-logo">
+      <img src="assets/logo.png" alt="Prime Tech Engineering logo">
+      <div class="lt">PRIMETECH<small>ENGINEERING SOLUTION</small></div>
+    </div>
+    <div class="nav-links">
+      <a href="#about" class="magnetic">About</a>
+      <a href="#services" class="magnetic">Services</a>
+      <a href="#why" class="magnetic">Why Us</a>
+      <a href="#contact" class="magnetic">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#contact" class="btn primary pill magnetic">Get a Quote <span class="arrow">→</span></a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" id="top">
+  <div class="hero-card" id="heroCard">
+    <div class="hero-bg">
+      <div class="sky"></div>
+      <div class="haze"></div>
+      <svg viewBox="0 0 1400 500" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="0,340 140,260 260,300 400,220 520,270 660,190 800,260 940,210 1080,280 1220,230 1400,300 1400,500 0,500" fill="#0f2138" opacity="0.9"/>
+        <polygon points="0,400 180,340 340,380 480,320 620,370 780,310 920,360 1080,320 1240,370 1400,340 1400,500 0,500" fill="#0a1a2c"/>
+      </svg>
+      <div class="noise-grid"></div>
+      <div class="vignette"></div>
+    </div>
+
+    <div class="hero-outline" aria-hidden="true">POWER</div>
+
+    <div class="hero-diamond" id="heroDiamond">
+      <div class="diamond-face"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-bottom">
+        <div class="hero-copy">
+          <span class="kicker" id="heroKicker">PRIMETECH // ENGINEERING SOLUTION</span>
+          <h1>
+            <span class="line"><span>Engineering the Power</span></span>
+            <span class="line"><span>Behind Every Building.</span></span>
+          </h1>
+          <p>Solar, electrical, HVAC, fire and automation systems — planned, installed and maintained by one certified engineering team.</p>
+          <a href="#services" class="btn solid-accent pill magnetic">Explore Services <span class="arrow">→</span></a>
+        </div>
+
+        <div class="hero-side">
+          <div class="stat-pills">
+            <div class="stat-pill"><div class="n">100%</div><div class="l">Standards<br>Compliant</div></div>
+            <div class="stat-pill"><div class="n">24/7</div><div class="l">Maintenance<br>Support</div></div>
+          </div>
+          <div class="rating-pill">
+            <div class="avatar-stack">
+              <div class="av" style="background:linear-gradient(135deg,var(--cyan),var(--blue-light));">RE</div>
+              <div class="av" style="background:linear-gradient(135deg,var(--blue-light),var(--blue));">EL</div>
+              <div class="av" style="background:linear-gradient(135deg,var(--amber),#ff7a45);">HV</div>
+              <div class="av" style="background:linear-gradient(135deg,#22e0ff,#1652f0);">FA</div>
+            </div>
+            <div class="rating-text"><span class="stars">★★★★★</span><b>500+</b> Projects Delivered</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="discover-more"><a href="#about">🔗 Discover more</a></div>
+</section>
+
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="eyebrow">01 — About Us</div>
+    <div class="about-grid">
+      <div class="about-copy" data-reveal>
+        <p><strong>Prime Tech Engineering</strong> is a modern engineering company committed to delivering comprehensive engineering solutions for residential, commercial, industrial, and government sectors through advanced technology and professional standards.</p>
+        <p>From initial planning and system design to installation, testing, commissioning, and maintenance, we deliver complete engineering solutions with professionalism and excellence — safe, high-quality, energy-efficient, and compliant with international standards.</p>
+        <p>Our vision is to become a trusted engineering partner by delivering all essential building engineering services under one reliable organization — driven by innovation, quality, safety, and long-term client relationships.</p>
+      </div>
+      <div class="stat-panel" data-reveal>
+        <div class="stat-grid">
+          <div class="stat"><div class="num"><span data-count="5">0</span><span class="suffix">+</span></div><div class="label">Core Disciplines</div></div>
+          <div class="stat"><div class="num"><span data-count="100">0</span><span class="suffix">%</span></div><div class="label">Standards Compliant</div></div>
+          <div class="stat"><div class="num"><span data-count="24">0</span><span class="suffix">/7</span></div><div class="label">Maintenance Support</div></div>
+          <div class="stat"><div class="num"><span data-count="1">0</span><span class="suffix">-STOP</span></div><div class="label">Building Solutions</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section tight" id="services">
+  <div class="wrap">
+    <div class="head-row">
+      <div>
+        <div class="eyebrow">02 — Core Systems</div>
+        <h2>Five disciplines. One engineering partner.</h2>
+      </div>
+      <div class="sub">Each system below is planned, installed, tested, commissioned and maintained in-house — so nothing falls through the gaps between contractors.</div>
+    </div>
+
+    <div class="svc-list" id="svcList">
+
+      <div class="svc-item" data-svc>
+        <div class="svc-row-hover"></div>
+        <div class="sys">SYS.01</div>
+        <div class="svc-top">
+          <svg class="svc-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="20" cy="20" r="7"/><path d="M20 3v6M20 31v6M3 20h6M31 20h6M8 8l4.2 4.2M27.8 27.8L32 32M32 8l-4.2 4.2M12.2 27.8L8 32"/></svg>
+          <div class="svc-titlewrap">
+            <h3>Renewable Energy Solutions</h3>
+            <div class="tags"><span>Solar PV Systems</span><span>Battery Backup</span></div>
+          </div>
+        </div>
+        <div class="svc-plus"></div>
+        <div class="svc-detail"><div class="svc-detail-in">Grid-tied, off-grid and hybrid Solar PV design with battery backup storage — sized, engineered and commissioned to cut energy costs and keep critical loads running.</div></div>
+      </div>
+
+      <div class="svc-item" data-svc>
+        <div class="svc-row-hover"></div>
+        <div class="sys">SYS.02</div>
+        <div class="svc-top">
+          <svg class="svc-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M22 3 8 22h9l-3 15 16-20h-9l3-14z" stroke-linejoin="round"/></svg>
+          <div class="svc-titlewrap">
+            <h3>Electrical Engineering &amp; Contracting</h3>
+            <div class="tags"><span>Electrical Installations</span><span>EV Charging</span></div>
+          </div>
+        </div>
+        <div class="svc-plus"></div>
+        <div class="svc-detail"><div class="svc-detail-in">Full-scope electrical installation and contracting, including EV charging infrastructure — engineered for safety, load accuracy and code compliance from design through commissioning.</div></div>
+      </div>
+
+      <div class="svc-item" data-svc>
+        <div class="svc-row-hover"></div>
+        <div class="sys">SYS.03</div>
+        <div class="svc-top">
+          <svg class="svc-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M20 4v32M20 4l-5 5M20 4l5 5M20 36l-5-5M20 36l5-5M4 20h32M4 20l5-5M4 20l5 5M36 20l-5-5M36 20l-5 5M9 9l22 22M9 31 31 9"/></svg>
+          <div class="svc-titlewrap">
+            <h3>Air Conditioning &amp; HVAC</h3>
+            <div class="tags"><span>Climate Design</span><span>Ventilation</span></div>
+          </div>
+        </div>
+        <div class="svc-plus"></div>
+        <div class="svc-detail"><div class="svc-detail-in">HVAC system design, installation and servicing for residential, commercial and industrial spaces — balancing comfort, air quality and energy efficiency year-round.</div></div>
+      </div>
+
+      <div class="svc-item" data-svc>
+        <div class="svc-row-hover"></div>
+        <div class="sys">SYS.04</div>
+        <div class="svc-top">
+          <svg class="svc-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M20 4c4 6-3 8-1 14 1.5 4.5 6 4 6 9a9 9 0 0 1-18 0c0-5 3-6 3-11 0 4 2 5 3 4-2-5 1-9 7-16z" stroke-linejoin="round"/></svg>
+          <div class="svc-titlewrap">
+            <h3>Fire Protection Systems</h3>
+            <div class="tags"><span>Detection</span><span>Suppression</span></div>
+          </div>
+        </div>
+        <div class="svc-plus"></div>
+        <div class="svc-detail"><div class="svc-detail-in">Fire detection, alarm and suppression systems engineered to code — protecting people, property and continuity across every building type.</div></div>
+      </div>
+
+      <div class="svc-item" data-svc>
+        <div class="svc-row-hover"></div>
+        <div class="sys">SYS.05</div>
+        <div class="svc-top">
+          <svg class="svc-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="13" y="13" width="14" height="14" rx="1"/><path d="M20 3v6M20 31v6M3 20h6M31 20h6M20 13v-3M20 30v-3M13 20h-3M30 20h-3"/></svg>
+          <div class="svc-titlewrap">
+            <h3>Building Automation &amp; Smart Solutions</h3>
+            <div class="tags"><span>CCTV &amp; Security</span><span>Smart Controls</span></div>
+          </div>
+        </div>
+        <div class="svc-plus"></div>
+        <div class="svc-detail"><div class="svc-detail-in">CCTV, access control and building automation that bring lighting, security and climate under one intelligent, monitorable system.</div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section tight" id="why">
+  <div class="wrap">
+    <div class="eyebrow">03 — Why Prime Tech</div>
+    <h2 style="max-width:600px;margin-bottom:56px;">Built on standards, not shortcuts.</h2>
+    <div class="why-grid">
+      <div class="why-cell" data-reveal>
+        <svg class="wi" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2 3 6v6c0 6.5 4.3 10.8 10 12 5.7-1.2 10-5.5 10-12V6L13 2z"/><path d="M9 13l3 3 6-6"/></svg>
+        <h4>Safety First</h4>
+        <p>Every installation follows international safety and quality standards, end to end.</p>
+      </div>
+      <div class="why-cell" data-reveal>
+        <svg class="wi" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 3v20M3 13h20"/><circle cx="13" cy="13" r="10"/></svg>
+        <h4>Energy Efficient</h4>
+        <p>Systems designed to lower running costs without compromising performance.</p>
+      </div>
+      <div class="why-cell" data-reveal>
+        <svg class="wi" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 20V10l9-6 9 6v10"/><path d="M9 20v-7h8v7"/></svg>
+        <h4>One-Stop Team</h4>
+        <p>Five disciplines under one roof — no gaps between contractors or handoffs.</p>
+      </div>
+      <div class="why-cell" data-reveal>
+        <svg class="wi" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 6v7l5 3"/><circle cx="13" cy="13" r="10"/></svg>
+        <h4>Full Lifecycle</h4>
+        <p>Planning, design, installation, testing, commissioning and maintenance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="contact">
+  <div class="wrap cta-inner">
+    <div class="eyebrow" style="justify-content:center;">04 — Start a Project</div>
+    <h2>Let's design the systems your building runs on.</h2>
+    <p class="sub">Tell us what you're building and which systems you need — we'll come back with a plan, not just a quote.</p>
+    <div class="cta-btns">
+      <a href="mailto:info@primetech.com" class="btn primary magnetic">Email Us <span class="arrow">→</span></a>
+      <a href="#top" class="btn magnetic">Back to Top</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <img src="assets/logo.png" alt="Prime Tech Engineering logo">
+          <div class="lt">PRIMETECH<small>ENGINEERING SOLUTION</small></div>
+        </div>
+        <p>Comprehensive engineering solutions for residential, commercial, industrial and government sectors.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Systems</h5>
+        <a href="#services">Renewable Energy</a>
+        <a href="#services">Electrical</a>
+        <a href="#services">HVAC</a>
+      </div>
+      <div class="footer-col">
+        <h5>Systems</h5>
+        <a href="#services">Fire Protection</a>
+        <a href="#services">Automation</a>
+        <a href="#services">CCTV &amp; Security</a>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <a href="#about">About</a>
+        <a href="#why">Why Us</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 PRIMETECH ENGINEERING SOLUTION</span>
+      <span>ALL SYSTEMS OPERATIONAL</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
