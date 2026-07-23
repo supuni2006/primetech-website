@@ -72,6 +72,31 @@ ScrollTrigger.create({
   onUpdate:self=>{ document.getElementById('mainNav').classList.toggle('solid', self.scroll()>80); }
 });
 
+/* ============ MOBILE MENU ============ */
+(function(){
+  const burger = document.getElementById('navBurger');
+  const menu = document.getElementById('mobileMenu');
+  const overlay = document.getElementById('mobileMenuOverlay');
+  if(!burger || !menu) return;
+
+  function closeMenu(){
+    burger.classList.remove('open'); burger.setAttribute('aria-expanded','false');
+    menu.classList.remove('open'); overlay.classList.remove('open');
+    document.body.style.overflow='';
+  }
+  function openMenu(){
+    burger.classList.add('open'); burger.setAttribute('aria-expanded','true');
+    menu.classList.add('open'); overlay.classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  burger.addEventListener('click', ()=>{
+    burger.classList.contains('open') ? closeMenu() : openMenu();
+  });
+  overlay.addEventListener('click', closeMenu);
+  menu.querySelectorAll('a').forEach(a=>a.addEventListener('click', closeMenu));
+  window.addEventListener('resize', ()=>{ if(innerWidth>900) closeMenu(); });
+})();
+
 /* ============ HERO TEXT INTRO ============ */
 function playHeroIntro(){
   const tl = gsap.timeline({delay:0.15});
