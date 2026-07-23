@@ -217,8 +217,6 @@ nav.solid .nav-frame{
   white-space:nowrap;z-index:1;user-select:none;pointer-events:none;line-height:1;
 }
 
-/* nav sits visually above card content, but lives in .nav above; spacer not needed since nav is fixed */
-
 .hero-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:48px;min-height:82vh;}
 .hero-bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;}
 .hero-copy{max-width:560px;}
@@ -348,14 +346,16 @@ nav.solid .nav-frame{
 .cta-btns{display:flex;gap:18px;justify-content:center;}
 
 footer{border-top:1px solid var(--line);padding:60px 0 34px;}
-.footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:50px;margin-bottom:60px;}
+.footer-top{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr 1.3fr;gap:50px;margin-bottom:60px;}
 .footer-brand .nav-logo{margin-bottom:18px;}
 .footer-brand p{color:var(--text-dim);font-size:13.5px;line-height:1.8;max-width:280px;}
 .footer-col h5{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim2);margin-bottom:20px;}
 .footer-col a{display:block;color:var(--text-dim);font-size:13.5px;margin-bottom:12px;transition:color .25s;}
 .footer-col a:hover{color:var(--cyan);}
+.footer-contact a{line-height:1.6;}
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:26px;border-top:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-dim2);letter-spacing:.05em;}
 @media(max-width:900px){.footer-top{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.footer-top{grid-template-columns:1fr;}}
 
 @media(max-width:760px){
   .wrap{padding:0 22px;}
