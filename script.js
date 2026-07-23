@@ -24,18 +24,31 @@ function revealSite(){
 const dot = document.getElementById('cursorDot');
 const ring = document.getElementById('cursorRing');
 const ringLabel = document.getElementById('cursorLabel');
-let mx=innerWidth/2, my=innerHeight/2, rx=mx, ry=my;
-window.addEventListener('mousemove', e=>{ mx=e.clientX; my=e.clientY; });
-(function tick(){
-  dot.style.left=mx+'px'; dot.style.top=my+'px';
-  rx += (mx-rx)*0.16; ry += (my-ry)*0.16;
-  ring.style.left=rx+'px'; ring.style.top=ry+'px';
-  requestAnimationFrame(tick);
-})();
+
+gsap.set([dot, ring], {xPercent:-50, yPercent:-50});
+
+const qDotX = gsap.quickTo(dot,'x',{duration:0.12,ease:'power3'});
+const qDotY = gsap.quickTo(dot,'y',{duration:0.12,ease:'power3'});
+const qRingX = gsap.quickTo(ring,'x',{duration:0.45,ease:'power3'});
+const qRingY = gsap.quickTo(ring,'y',{duration:0.45,ease:'power3'});
+
+window.addEventListener('mousemove', e=>{
+  qDotX(e.clientX); qDotY(e.clientY);
+  qRingX(e.clientX); qRingY(e.clientY);
+});
+
 function bindCursor(selector, label){
   document.querySelectorAll(selector).forEach(el=>{
-    el.addEventListener('mouseenter',()=>{ ring.classList.add('active'); ringLabel.textContent = label||''; });
-    el.addEventListener('mouseleave',()=>{ ring.classList.remove('active'); ringLabel.textContent=''; });
+    el.addEventListener('mouseenter',()=>{
+      ring.classList.add('active'); ringLabel.textContent = label||'';
+      dot.classList.add('active');
+      gsap.to(dot,{scale:2.4,duration:0.35,ease:'back.out(3)'});
+    });
+    el.addEventListener('mouseleave',()=>{
+      ring.classList.remove('active'); ringLabel.textContent='';
+      dot.classList.remove('active');
+      gsap.to(dot,{scale:1,duration:0.35,ease:'power3.out'});
+    });
   });
 }
 bindCursor('a, .btn', 'GO');
@@ -69,8 +82,7 @@ function playHeroIntro(){
     .to('.hero-copy p',{opacity:1,duration:0.7,ease:'power2.out'},'-=0.5')
     .to('.hero-copy .btn',{opacity:1,duration:0.7,ease:'power2.out'},'-=0.45')
     .to('.hero-side',{opacity:1,duration:0.8,ease:'power2.out'},'-=0.5')
-    .from('.hero-outline',{opacity:0,duration:1.2,ease:'power2.out'},'-=0.9')
-    .from('#heroDiamond',{opacity:0,y:60,duration:1.2,ease:'power3.out'},'-=1');
+    .from('.hero-outline',{opacity:0,duration:1.2,ease:'power2.out'},'-=0.9');
 }
 
 /* ============ SCROLL REVEALS ============ */
@@ -120,28 +132,21 @@ document.querySelectorAll('[data-svc]').forEach(item=>{
   });
 });
 
-/* ============ HERO DIAMOND + CARD PARALLAX (mouse interaction) ============ */
+/* ============ HERO CARD PARALLAX (mouse interaction) ============ */
 (function(){
   const card = document.getElementById('heroCard');
-  const diamond = document.getElementById('heroDiamond');
   const outline = document.querySelector('.hero-outline');
-  if(!card || !diamond) return;
+  if(!card) return;
 
-  /* animate the WRAPPER, not .diamond-face (which owns its own fixed isometric CSS transform) */
-  const qDiaX = gsap.quickTo(diamond,'x',{duration:0.7,ease:'power3'});
-  const qDiaY = gsap.quickTo(diamond,'y',{duration:0.7,ease:'power3'});
   const qOutX = gsap.quickTo(outline,'x',{duration:0.9,ease:'power3'});
 
   card.addEventListener('mousemove', e=>{
     const r = card.getBoundingClientRect();
     const nx = (e.clientX - r.left)/r.width - 0.5;
-    const ny = (e.clientY - r.top)/r.height - 0.5;
-    qDiaX(nx*36);
-    qDiaY(ny*22);
     qOutX(nx*-30);
   });
   card.addEventListener('mouseleave', ()=>{
-    qDiaX(0); qDiaY(0); qOutX(0);
+    qOutX(0);
   });
 
   /* three.js particle drift across the sky layer for subtle depth */
