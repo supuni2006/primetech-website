@@ -1,5 +1,85 @@
 gsap.registerPlugin(ScrollTrigger);
 
+/* ============ GALAXY PARTICLE FIELD ============ */
+(function(){
+  const canvas = document.getElementById('galaxyCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const DPR = Math.min(devicePixelRatio||1, 2);
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let w,h,particles=[];
+
+  const COLORS = [
+    'rgba(8,145,178,ALPHA)',
+    'rgba(47,143,255,ALPHA)',
+    'rgba(22,82,240,ALPHA)',
+    'rgba(13,23,64,ALPHA)'
+  ];
+
+  function resize(){
+    w = canvas.width = innerWidth*DPR;
+    h = canvas.height = innerHeight*DPR;
+    canvas.style.width = innerWidth+'px';
+    canvas.style.height = innerHeight+'px';
+  }
+  function makeParticles(){
+    const count = Math.min(150, Math.floor((innerWidth*innerHeight)/13000));
+    particles = Array.from({length:count},()=>({
+      x:Math.random()*w,
+      y:Math.random()*h,
+      r:(Math.random()*1.5+0.5)*DPR,
+      baseAlpha:Math.random()*0.4+0.18,
+      speed:(Math.random()*0.14+0.03)*DPR,
+      drift:(Math.random()-0.5)*0.05*DPR,
+      twinkleSpeed:Math.random()*0.02+0.006,
+      twinklePhase:Math.random()*Math.PI*2,
+      color:COLORS[Math.floor(Math.random()*COLORS.length)]
+    }));
+  }
+  resize(); makeParticles();
+  window.addEventListener('resize', ()=>{ resize(); makeParticles(); });
+
+  /* smooth, framer-motion-style eased parallax drift toward the cursor */
+  const parallax = {x:0,y:0};
+  const qX = gsap.quickTo(parallax,'x',{duration:1.4,ease:'power3.out'});
+  const qY = gsap.quickTo(parallax,'y',{duration:1.4,ease:'power3.out'});
+  window.addEventListener('mousemove', e=>{
+    qX((e.clientX/innerWidth - 0.5)*24);
+    qY((e.clientY/innerHeight - 0.5)*16);
+  });
+
+  let t=0;
+  function draw(){
+    t += 1;
+    ctx.clearRect(0,0,w,h);
+    for(const p of particles){
+      p.y -= p.speed;
+      p.x += p.drift;
+      if(p.y < -10){ p.y = h+10; p.x = Math.random()*w; }
+      if(p.x < -10) p.x = w+10;
+      if(p.x > w+10) p.x = -10;
+      const twinkle = Math.sin(t*p.twinkleSpeed + p.twinklePhase)*0.35+0.65;
+      const alpha = (p.baseAlpha*twinkle).toFixed(3);
+      ctx.beginPath();
+      ctx.fillStyle = p.color.replace('ALPHA', alpha);
+      ctx.arc(p.x + parallax.x*DPR, p.y + parallax.y*DPR, p.r, 0, Math.PI*2);
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  if(!reduceMotion) draw();
+  else {
+    /* static single frame for reduced-motion users */
+    ctx.clearRect(0,0,w,h);
+    for(const p of particles){
+      ctx.beginPath();
+      ctx.fillStyle = p.color.replace('ALPHA', p.baseAlpha.toFixed(3));
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fill();
+    }
+  }
+})();
+
 /* ============ PRELOADER ============ */
 const plFill = document.getElementById('pl-fill');
 const plPct = document.getElementById('pl-pct');
