@@ -9,8 +9,15 @@
   --cyan:#0891b2;
   --amber:#c2740a;
   --text:#0d1728;
-  --text-dim:#55637a;
+  --text-dim:#020915;
   --text-dim2:#8090a5;
+
+  --navy:#0a1730;
+  --navy-2:#0e2044;
+  --navy-line:rgba(255,255,255,0.10);
+  --navy-text:#c7d2e3;
+  --navy-text-dim:#8593ad;
+  --orange:#ff7a1a;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -339,23 +346,131 @@ nav.solid .nav-frame{
 @media(max-width:900px){.why-grid{grid-template-columns:1fr 1fr;}}
 
 /* ---------- CTA / footer ---------- */
-.cta-section{padding:130px 0;border-top:1px solid var(--line);position:relative;overflow:hidden;}
+.cta-section{padding:130px 0;border-top:1px solid var(--line);position:relative;overflow:hidden;background:#c6d1ed;}
 .cta-inner{text-align:center;position:relative;z-index:2;}
-.cta-inner h2{font-size:clamp(30px,5vw,58px);max-width:760px;margin:0 auto 30px;line-height:1.08;}
-.cta-inner .sub{color:var(--text-dim);max-width:460px;margin:0 auto 42px;font-size:15px;line-height:1.7;}
+.cta-inner .eyebrow{color:var(--cyan);}
+.cta-inner h2{font-size:clamp(30px,5vw,58px);max-width:760px;margin:0 auto 30px;line-height:1.08;color:#131212;}
+.cta-inner .sub{color:var(--navy-text-dim);max-width:460px;margin:0 auto 42px;font-size:15px;line-height:1.7;}
 .cta-btns{display:flex;gap:18px;justify-content:center;}
+.cta-section .btn{color:#fff;border-color:var(--navy-line);}
+.cta-section .btn:not(.primary){background:rgba(165, 168, 174, 0.04);}
 
-footer{border-top:1px solid var(--line);padding:60px 0 34px;}
-.footer-top{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr 1.3fr;gap:50px;margin-bottom:60px;}
+/* solar system mouse-reactive GSAP background */
+.solar-bg{
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  perspective:1000px;
+}
+.solar-bg canvas{width:100%;height:100%;display:block;}
+
+/* highlighted, tappable call numbers */
+.cta-call-block{margin-top:52px;position:relative;z-index:2;}
+.cta-call-label{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--navy-text-dim);margin-bottom:20px;
+}
+.cta-call-numbers{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;}
+.call-highlight{
+  display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;
+  background:linear-gradient(120deg,rgba(255,122,26,0.16),rgba(255,122,26,0.06));
+  border:1px solid rgba(255,122,26,0.45);color:#ffb27a;font-weight:700;font-size:16.5px;letter-spacing:.02em;
+  position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s,color .25s;
+}
+.call-highlight svg{width:18px;height:18px;flex:none;}
+.call-highlight::after{
+  content:'';position:absolute;inset:0;border-radius:999px;box-shadow:0 0 0 0 rgba(255,122,26,0.45);
+  animation:callPulse 2.2s infinite;
+}
+.call-highlight:hover{color:#fff;transform:translateY(-2px) scale(1.03);box-shadow:0 12px 30px rgba(255,122,26,0.3);}
+@keyframes callPulse{
+  0%{box-shadow:0 0 0 0 rgba(255,122,26,0.35);}
+  70%{box-shadow:0 0 0 12px rgba(255,122,26,0);}
+  100%{box-shadow:0 0 0 0 rgba(255,122,26,0);}
+}
+.cta-call-note{margin-top:16px;font-size:12px;color:var(--navy-text-dim);}
+
+/* highlighted "Get a Quote" nav button */
+.quote-highlight{position:relative;}
+.quote-highlight::before{
+  content:'';position:absolute;inset:-3px;border-radius:999px;z-index:-1;
+  background:linear-gradient(120deg,var(--cyan),var(--blue-light));opacity:.55;filter:blur(8px);
+  animation:quoteGlow 2.6s ease-in-out infinite;
+}
+@keyframes quoteGlow{
+  0%,100%{opacity:.35;transform:scale(1);}
+  50%{opacity:.7;transform:scale(1.06);}
+}
+
+footer{
+  background:linear-gradient(180deg,var(--navy),var(--navy-2));
+  padding:70px 0 30px;margin-top:10px;position:relative;overflow:hidden;
+}
+footer::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(var(--navy-line) 1px,transparent 1px),linear-gradient(90deg,var(--navy-line) 1px,transparent 1px);
+  background-size:42px 42px;opacity:.35;
+}
+footer .wrap{position:relative;z-index:2;}
+footer .nav-logo .lt{color:#fff;}
+footer .nav-logo .lt small{color:var(--navy-text-dim);}
+
+.footer-top{display:grid;grid-template-columns:1.3fr 0.9fr 1.1fr 1fr;gap:50px;margin-bottom:46px;}
 .footer-brand .nav-logo{margin-bottom:18px;}
-.footer-brand p{color:var(--text-dim);font-size:13.5px;line-height:1.8;max-width:280px;}
-.footer-col h5{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim2);margin-bottom:20px;}
-.footer-col a{display:block;color:var(--text-dim);font-size:13.5px;margin-bottom:12px;transition:color .25s;}
-.footer-col a:hover{color:var(--cyan);}
-.footer-contact a{line-height:1.6;}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:26px;border-top:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-dim2);letter-spacing:.05em;}
+.footer-brand p{color:var(--navy-text-dim);font-size:13.5px;line-height:1.85;max-width:300px;}
+
+.footer-presence{margin-top:26px;padding-top:22px;border-top:1px solid var(--navy-line);}
+.fp-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--navy-text-dim);}
+.fp-list{margin-top:10px;display:flex;flex-wrap:wrap;gap:14px;}
+.fp-item{font-size:13px;color:var(--navy-text);}
+
+.footer-col h5{
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:#fff;margin-bottom:22px;position:relative;padding-bottom:12px;
+}
+.footer-col h5::after{content:'';position:absolute;left:0;bottom:0;width:26px;height:2px;background:var(--orange);}
+.footer-col a{display:block;color:var(--navy-text-dim);font-size:13.5px;margin-bottom:12px;transition:color .25s,transform .25s;}
+.footer-col a:hover{color:var(--cyan);transform:translateX(3px);}
+
+.fc-block{margin-bottom:20px;}
+.fc-label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--navy-text-dim);margin-bottom:8px;}
+.fc-address{color:var(--navy-text);font-size:13.5px;line-height:1.6;}
+.fc-address:hover{color:var(--cyan);}
+.fc-phone{
+  display:flex;align-items:center;gap:8px;color:#ffb27a;font-weight:600;font-size:15px;
+  letter-spacing:.02em;margin-bottom:8px;transition:color .25s,transform .25s;
+}
+.fc-phone:hover{color:var(--orange);transform:translateX(3px);}
+.fc-email{color:var(--cyan);font-size:13.5px;word-break:break-all;}
+
+.footer-newsletter .fn-copy{color:var(--navy-text-dim);font-size:13px;line-height:1.7;margin-bottom:18px;}
+.fn-form{display:flex;border:1px solid var(--navy-line);border-radius:8px;overflow:hidden;background:rgba(255,255,255,0.04);}
+.fn-form input{
+  flex:1;background:transparent;border:none;padding:13px 16px;color:#fff;font-size:13px;font-family:inherit;
+}
+.fn-form input::placeholder{color:var(--navy-text-dim);}
+.fn-form input:focus{outline:none;}
+.fn-form button{
+  background:linear-gradient(120deg,var(--orange),#ff9d4d);border:none;color:#fff;width:46px;flex:none;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;transition:filter .2s;
+}
+.fn-form button svg{width:17px;height:17px;}
+.fn-form button:hover{filter:brightness(1.1);}
+.fn-note{display:block;margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--navy-text-dim);}
+
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+  padding-top:26px;border-top:1px solid var(--navy-line);
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--navy-text-dim);letter-spacing:.05em;
+}
+.fb-status{display:flex;align-items:center;gap:8px;color:#7be0a0;}
+.fb-dot{width:7px;height:7px;border-radius:50%;background:#38e07a;box-shadow:0 0 0 0 rgba(56,224,122,.6);animation:fbPulse 2s infinite;}
+@keyframes fbPulse{
+  0%{box-shadow:0 0 0 0 rgba(56,224,122,.55);}
+  70%{box-shadow:0 0 0 8px rgba(56,224,122,0);}
+  100%{box-shadow:0 0 0 0 rgba(56,224,122,0);}
+}
+
 @media(max-width:900px){.footer-top{grid-template-columns:1fr 1fr;}}
-@media(max-width:560px){.footer-top{grid-template-columns:1fr;}}
+@media(max-width:560px){.footer-top{grid-template-columns:1fr;}.footer-bottom{flex-direction:column;align-items:flex-start;}}
 
 @media(max-width:760px){
   .wrap{padding:0 22px;}

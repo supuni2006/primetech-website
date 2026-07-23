@@ -299,3 +299,117 @@ document.querySelectorAll('[data-svc]').forEach(item=>{
   animate();
   window.addEventListener('resize', sizeRenderer);
 })();
+/* ============ CONTACT SECTION — GSAP ROTATING SOLAR SYSTEM (mouse-reactive) ============ */
+(function(){
+  const wrap = document.getElementById('solarBg');
+  const canvas = document.getElementById('solarCanvas');
+  if(!wrap || !canvas) return;
+  const ctx = canvas.getContext('2d');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const DPR = Math.min(devicePixelRatio||1, 2);
+  let w,h,cx,cy;
+
+  function resize(){
+    const r = wrap.getBoundingClientRect();
+    w = canvas.width = r.width*DPR;
+    h = canvas.height = r.height*DPR;
+    canvas.style.width = r.width+'px';
+    canvas.style.height = r.height+'px';
+    cx = w/2; cy = h/2;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  /* planets: radius of orbit, size, color, base angular speed, current angle */
+  const planets = [
+    {orbit:0.16, size:5,  color:'#ff9d4d', speed:0.014, angle:Math.random()*6.28},
+    {orbit:0.24, size:7,  color:'#2f8fff', speed:0.010, angle:Math.random()*6.28},
+    {orbit:0.33, size:4,  color:'#22e0ff', speed:0.0075,angle:Math.random()*6.28},
+    {orbit:0.42, size:9,  color:'#c2740a', speed:0.0055,angle:Math.random()*6.28},
+    {orbit:0.50, size:5.5,color:'#7be0ff', speed:0.0038,angle:Math.random()*6.28},
+  ];
+
+  /* smooth, framer-motion-style eased tilt driven by GSAP quickTo, reacting to mouse position */
+  const tilt = {x:0, y:0, drift:0};
+  const qTiltX = gsap.quickTo(tilt, 'x', {duration:1.1, ease:'power3.out'});
+  const qTiltY = gsap.quickTo(tilt, 'y', {duration:1.1, ease:'power3.out'});
+  const qDrift = gsap.quickTo(tilt, 'drift', {duration:1.6, ease:'power3.out'});
+
+  wrap.addEventListener('mousemove', (e)=>{
+    const r = wrap.getBoundingClientRect();
+    const nx = (e.clientX - r.left)/r.width - 0.5;   // -0.5 .. 0.5
+    const ny = (e.clientY - r.top)/r.height - 0.5;
+    qTiltX(nx * (Math.min(r.width,900)*0.28));
+    qTiltY(ny * 40);
+    qDrift(nx * 0.02); // speeds orbit rotation slightly toward cursor side
+  });
+  wrap.addEventListener('mouseleave', ()=>{ qTiltX(0); qTiltY(0); qDrift(0); });
+
+  /* GSAP-driven continuous base rotation of the whole system (independent of mouse) */
+  const spin = {angle:0};
+  if(!reduceMotion){
+    gsap.to(spin, {angle:360, duration:90, repeat:-1, ease:'none'});
+  }
+
+  function draw(){
+    requestAnimationFrame(draw);
+    ctx.clearRect(0,0,w,h);
+
+    const baseR = Math.min(w,h);
+    const originX = cx + tilt.x*DPR;
+    const originY = cy + tilt.y*DPR;
+    const globalAngle = (spin.angle * Math.PI/180);
+
+    /* sun glow */
+    const sunR = baseR*0.035 + 6;
+    const grad = ctx.createRadialGradient(originX,originY,0,originX,originY,sunR*6);
+    grad.addColorStop(0,'rgba(255,180,90,0.55)');
+    grad.addColorStop(0.4,'rgba(255,140,40,0.18)');
+    grad.addColorStop(1,'rgba(255,140,40,0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath(); ctx.arc(originX,originY,sunR*6,0,Math.PI*2); ctx.fill();
+
+    ctx.fillStyle = '#ffcf8a';
+    ctx.beginPath(); ctx.arc(originX,originY,sunR,0,Math.PI*2); ctx.fill();
+
+    planets.forEach(p=>{
+      const orbitR = baseR*p.orbit;
+
+      /* orbit ring */
+      ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+      ctx.lineWidth = 1*DPR;
+      ctx.beginPath();
+      ctx.ellipse(originX, originY, orbitR, orbitR*0.92, 0, 0, Math.PI*2);
+      ctx.stroke();
+
+      if(!reduceMotion) p.angle += p.speed + tilt.drift;
+      const a = p.angle + globalAngle;
+      const px = originX + Math.cos(a)*orbitR;
+      const py = originY + Math.sin(a)*orbitR*0.92;
+
+      ctx.fillStyle = p.color;
+      ctx.shadowColor = p.color;
+      ctx.shadowBlur = 10*DPR;
+      ctx.beginPath();
+      ctx.arc(px, py, p.size*DPR, 0, Math.PI*2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    });
+  }
+  draw();
+})();
+
+/* ============ FOOTER NEWSLETTER (front-end confirmation only) ============ */
+(function(){
+  const form = document.getElementById('footerNewsletterForm');
+  if(!form) return;
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const btn = form.querySelector('button');
+    const input = form.querySelector('input');
+    if(!input.value) return;
+    gsap.fromTo(btn, {scale:1}, {scale:1.15, duration:.15, yoyo:true, repeat:1, ease:'power1.inOut'});
+    input.placeholder = 'Subscribed ✓';
+    input.value = '';
+  });
+})();
