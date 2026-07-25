@@ -193,9 +193,9 @@ nav.solid .nav-frame{
 }
 
 /* ---------- hero ---------- */
-.hero{padding:140px 20px 0;display:flex;flex-direction:column;align-items:center;}
+.hero{padding:110px 20px 0;display:flex;flex-direction:column;align-items:center;min-height:100vh;box-sizing:border-box;}
 .hero-card{
-  position:relative;width:100%;max-width:1400px;min-height:82vh;
+  position:relative;width:100%;max-width:1400px;min-height:0;height:calc(100vh - 230px);
   border-radius:34px;overflow:hidden;border:1px solid var(--line-2);
   box-shadow:0 40px 100px rgba(0,0,0,0.55);
 }
@@ -231,7 +231,7 @@ nav.solid .nav-frame{
   white-space:nowrap;z-index:1;user-select:none;pointer-events:none;line-height:1;
 }
 
-.hero-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:48px;min-height:82vh;}
+.hero-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:48px;}
 .hero-bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;}
 .hero-copy{max-width:560px;}
 .hero-copy .kicker{
@@ -282,7 +282,7 @@ nav.solid .nav-frame{
 
 @media(max-width:760px){
   .hero{padding:130px 12px 0;}
-  .hero-card{border-radius:24px;min-height:auto;}
+  .hero-card{border-radius:24px;min-height:auto;height:auto;}
   .hero-content{padding:26px;min-height:auto;padding-top:220px;}
   .hero-outline{font-size:70px;top:20%;}
   .hero-bottom{flex-direction:column;align-items:flex-start;}
